@@ -1,0 +1,79 @@
+# Usage:
+#	dakota -i xxx.in -o run.out > stdout.out
+
+environment
+	#graphics
+	tabular_graphics_data
+		tabular_graphics_file = 'table_out.dat'
+	#single_method
+	
+	
+method
+	id_method = 'method1'
+	soga
+	output verbose
+	
+	max_function_evaluations = 72
+	
+	seed = 10983
+	population_size = 6
+	initialization_type unique_random
+	print_each_pop
+		
+	mutation_type replace_uniform
+		mutation_rate = 0.1
+		
+	crossover_type shuffle_random
+		num_offspring = 2
+		num_parents = 3
+		crossover_rate = 0.8
+		
+#SET HERE PARAMETERS FOR SOGA	
+	replacement_type elitist
+	fitness_type merit_function
+	constraint_penalty = 0.9
+	convergence_type best_fitness_tracker #other option is average_fitness_tracker
+	num_generations = 100
+	percent_change = 0.05
+
+variables
+	id_variables = 'variables2'
+	continuous_design = 2 #SpacerRadius, SpacerOffsetX
+		cdv_initial_point	0.1  5
+		cdv_lower_bounds	0.0  1.5
+		cdv_upper_bounds	1.0  8.5
+		cdv_descriptors		'x1' 'x2'
+		
+interface
+	id_interface = 'interface1'
+	fork
+		asynchronous
+		evaluation_concurrency = 1
+		analysis_driver	= 'Run_CFD.bat'
+		parameters_file = 'params.in'
+		results_file = 'results.out'
+		work_directory directory_tag 
+	  	copy_files = 'templatedir/*'
+		
+		#uncomment to leave params.in and results.out files in work_dir subdirectories:
+		named 'Cases\workDir' file_save directory_save
+		aprepro
+
+# when using conmin_frcg (above) with analytic_gradients (below),
+# need to turn off the active set vector as rosenbrock_bb does not parse it.
+#		deactivate active_set_vector
+
+responses
+	id_responses = 'responses1'
+	num_objective_functions = 1
+	
+	#GA do not need gradients
+	no_gradients
+
+# to instead use analytic gradients returned by the simulator comment the
+# preceding two lines and uncomment the following:
+##		analytic gradients
+
+	no_hessians
+	
+	sense 'max'
