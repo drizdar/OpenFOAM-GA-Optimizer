@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Macro Begin: C:\BlueCFD\blueCFD-Core-2017\ofuser-of5\run\freeCAD\Basic_Membrane\Macro3.FCMacro +++++++++++++++++++++++++++++++++++++++++++++++++
+# Macro Begin: +++++++++++++++++++++++++++++++++++++++++++++++++
 import os
 import FreeCAD
 import CfdAnalysis
@@ -25,7 +25,6 @@ with open('SSInputs', mode='r') as csv_file:
            line_count += 1
 
 cwd = os.getcwd()
-#cwd = "C:/BlueCFD/blueCFD-Core-2017/ofuser-of5/run/freeCAD/Basic_Membrane"
 FreeCAD.open(cwd + "/Basic_Membrane.FCStd")
 #App.setActiveDocument("Basic_Membrane")
 #App.ActiveDocument=App.getDocument("Basic_Membrane")
@@ -81,7 +80,7 @@ cart_mesh.setupMeshCaseDir()
 cart_mesh.processRefinements()
 cart_mesh.writeMeshCase()
 cart_mesh.writePartFile()
-# Macro End: C:\BlueCFD\blueCFD-Core-2017\ofuser-of5\run\freeCAD\Basic_Membrane\Macro3.FCMacro +++++++++++++++++++++++++++++++++++++++++++++++++
+# Macro End: +++++++++++++++++++++++++++++++++++++++++++++++++
 cmd0 = CfdTools.makeRunCommand('cp Allmesh2 meshCase', cwd, source_env=False)
 env_vars = CfdTools.getRunEnvironment()
 print("Executing: " + ' '.join(cmd0) + "\n")
@@ -244,7 +243,7 @@ init.BoundaryTurb = FreeCAD.ActiveDocument.CfdFluidBoundary001
 writer = CfdCaseWriterFoam.CfdCaseWriterFoam(FreeCAD.ActiveDocument.CfdAnalysis)
 writer.writeCase()
 
-# Macro End: C:\BlueCFD\blueCFD-Core-2017\ofuser-of5\run\freeCAD\Basic_Membrane\Sim.FCMacro +++++++++++++++++++++++++++++++++++++++++++++++++
+# Macro End: +++++++++++++++++++++++++++++++++++++++++++++++++
 cmd2 = CfdTools.makeRunCommand('cp Allrun2 case', cwd, source_env=False)
 print("Executing: " + ' '.join(cmd2) + "\n")
 copy_process = CfdConsoleProcess()
